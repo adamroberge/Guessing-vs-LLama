@@ -3,9 +3,12 @@ import os
 import base64
 from PIL import Image
 from io import BytesIO
+from api import LLAMA_API_KEY
 
 
-API_KEY = os.environ["LLAMA_API_KEY"]
+# API_KEY = os.environ["LLAMA_API_KEY"]
+API_KEY = LLAMA_API_KEY
+print(API_KEY)
 BASE_URL = "https://api.deepinfra.com/v1/openai"  # EDIT THIS
 
 llm_client = openai.OpenAI(api_key=API_KEY, base_url=BASE_URL)
