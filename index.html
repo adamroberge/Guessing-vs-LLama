@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pictionary AI</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		#canvas {
+			border: 1px solid #000;
+			cursor: crosshair;
+		}
+
+		#result,
+		#topic {
+			margin-top: 20px;
+			padding: 10px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+		}
+
+		button {
+			margin-top: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Pictionary AI</h1>
+	<button id="startButton">Start New Game</button>
+	<div id="topic"></div>
+	<canvas id="canvas" width="400" height="400"></canvas>
+	<br>
+	<button id="clearButton">Clear Canvas</button>
+	<button id="predictButton">Predict Drawing</button>
+	<div id="result"></div>
+
+	<script src="pictionary.js"></script>
+</body>
+
+</html>
