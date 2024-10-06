@@ -3,9 +3,10 @@ import requests
 import base64
 from PIL import Image
 from io import BytesIO
+from api import DeepInfra_API
 
 # Access your DeepInfra API key from environment variables
-API_KEY = "U8OE7UfBI4BeiPotho1ZhGL27Ixo8bZP"
+API_KEY = DeepInfra_API
 BASE_URL = "https://api.deepinfra.com/v1/openai/chat/completions"
 
 # Model name to use
