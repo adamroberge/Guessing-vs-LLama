@@ -10,6 +10,7 @@ API_KEY = os.environ.get("DEEPINFRA_API_KEY")
 # DeepInfra Deployment ID
 DEPLOYMENT_ID = os.environ.get("DEEPINFRA_DEPLOYMENT_ID")
 
+
 # Check if API key is set
 if not API_KEY:
     raise ValueError("Please set the DEEPINFRA_API_KEY environment variable.")

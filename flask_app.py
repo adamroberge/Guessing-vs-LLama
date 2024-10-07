@@ -1,12 +1,18 @@
 # flask_app.py
 
 from flask import Flask, request, jsonify
-from llm_api_calls import *
+from llm_api_calls import describe_image
 from flask_cors import CORS
 import random
 import base64
 from PIL import Image
 from io import BytesIO
+
+app = Flask(__name__)
+
+# Adjust CORS settings as needed
+CORS(app, resources={r"/*": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 topics = [
     {
@@ -45,12 +51,6 @@ topics = [
 
 current_topic = None
 
-app = Flask(__name__)
-
-# Adjust CORS settings as needed
-CORS(app, resources={r"/*": {"origins": "*"}})
-app.config['CORS_HEADERS'] = 'Content-Type'
-
 
 def check_correctness(llm_pred):
     return all([(t in llm_pred.lower()) for t in current_topic["targets"]])
@@ -85,4 +85,4 @@ def api_describe_image():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=5001)
