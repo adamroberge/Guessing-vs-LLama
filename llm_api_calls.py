@@ -4,23 +4,22 @@ import base64
 from PIL import Image
 from io import BytesIO
 
-
 # DeepInfra API key
 API_KEY = os.environ.get("DEEPINFRA_API_KEY")
 # DeepInfra Deployment ID
 DEPLOYMENT_ID = os.environ.get("DEEPINFRA_DEPLOYMENT_ID")
 
-
-# Check if API key is set
+# Check if API key and deployment ID are set
 if not API_KEY:
     raise ValueError("Please set the DEEPINFRA_API_KEY environment variable.")
+if not DEPLOYMENT_ID:
+    raise ValueError(
+        "Please set the DEEPINFRA_DEPLOYMENT_ID environment variable.")
 
 # Set the base URL for DeepInfra's OpenAI-compatible API
 openai.api_key = API_KEY
-openai.api_base = 'https://api.deepinfra.com/v1/deployment/openai'
-
-# Model name (ensure it matches your deployment)
-MODEL_NAME = 'meta-llama/Llama-3.2-11B-Vision-Instruct'
+openai.api_base = f'https://api.deepinfra.com/v1/deployment/{
+    DEPLOYMENT_ID}/openai'
 
 SYSTEM_PROMPT = """
 You are a pictionary player. I'll give you an image of a doodle and you must output what this image is.
@@ -57,9 +56,7 @@ def describe_image(image, missed_guesses=[], options={}):
 
     # Create the chat completion
     response = openai.ChatCompletion.create(
-        model=MODEL_NAME,
-        messages=messages,
-        deployment_id=DEPLOYMENT_ID  # Include your deployment ID here
+        messages=messages
     )
 
     # Extract the assistant's reply
