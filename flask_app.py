@@ -7,6 +7,7 @@ import random
 import base64
 from PIL import Image
 from io import BytesIO
+from topics import topics
 
 app = Flask(__name__)
 
@@ -14,41 +15,7 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-topics = [
-    {
-        "concept": "cat sitting on a table",
-        "targets": ["cat", "table"]
-    },
-    {
-        "concept": "dog eating a bone",
-        "targets": ["dog", "bone"]
-    },
-    {
-        "concept": "factory emitting smoke",
-        "targets": ["factory", "smoke"]
-    },
-    {
-        "concept": "An apple and a banana",
-        "targets": ["apple", "banana"]
-    },
-    {
-        "concept": "waterfalls with sun",
-        "targets": ["waterfall", "sun"]
-    },
-    {
-        "concept": "mountains and river",
-        "targets": ["mountain", "river"]
-    },
-    {
-        "concept": "trees and birds flying around",
-        "targets": ["tree", "birds"]
-    },
-    {
-        "concept": "man riding bicycle",
-        "targets": ["man", "bicycle"]
-    }
-]
-
+topics = topics  # from topics.py
 current_topic = None
 
 
