@@ -1,7 +1,7 @@
-from flask import Flask, request, jsonify
-from llm_api_calls import *
-from flask_cors import CORS
 import random
+from flask_cors import CORS
+from llm_api_calls import *
+from flask import Flask, request, jsonify
 
 topics = [
     {
@@ -44,15 +44,18 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:8000"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+
 def check_correctness(llm_pred):
     return all([(t in llm_pred) for t in current_topic["targets"]])
+
 
 @app.route("/begin_pictionary", methods=["GET"])
 def api_begin_pictionary():
     global current_topic
     current_topic = random.choice(topics)
     return jsonify({"topic": current_topic["concept"]})
-    
+
+
 @app.route('/describe_image', methods=['POST'])
 def api_describe_image():
     base64_image = request.form.get('image')
@@ -72,6 +75,7 @@ def api_describe_image():
     print(f"Correct: {correct}")
 
     return jsonify({"description": description, "correct": correct})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
