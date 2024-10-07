@@ -5,12 +5,10 @@ from PIL import Image
 from io import BytesIO
 
 
-# Set your DeepInfra API key and Deployment ID
+# DeepInfra API key
 API_KEY = os.environ.get("DEEPINFRA_API_KEY")
-print(API_KEY)
-# Replace with your actual Deployment ID
+# DeepInfra Deployment ID
 DEPLOYMENT_ID = os.environ.get("DEEPINFRA_DEPLOYMENT_ID")
-print(DEPLOYMENT_ID)
 
 # Check if API key is set
 if not API_KEY:
