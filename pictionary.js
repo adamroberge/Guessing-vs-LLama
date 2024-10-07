@@ -1,3 +1,5 @@
+// pictionary.js
+
 // Canvas setup
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -8,8 +10,22 @@ ctx.lineWidth = 5;
 ctx.lineCap = 'round';
 ctx.strokeStyle = '#000';
 
+// Adjust for touch devices
+let offsetLeft, offsetTop;
+
+function updateCanvasOffset() {
+	const rect = canvas.getBoundingClientRect();
+	offsetLeft = rect.left;
+	offsetTop = rect.top;
+}
+
+// Update offsets on window resize
+window.addEventListener('resize', updateCanvasOffset);
+updateCanvasOffset();
+
 // Drawing functions
 function startDrawing(e) {
+	e.preventDefault();
 	isDrawing = true;
 	draw(e);
 }
@@ -19,12 +35,28 @@ function stopDrawing() {
 	ctx.beginPath();
 }
 
+function getX(e) {
+	if (e.type.includes('touch')) {
+		return e.touches[0].clientX - offsetLeft;
+	} else {
+		return e.clientX - offsetLeft;
+	}
+}
+
+function getY(e) {
+	if (e.type.includes('touch')) {
+		return e.touches[0].clientY - offsetTop;
+	} else {
+		return e.clientY - offsetTop;
+	}
+}
+
 function draw(e) {
 	if (!isDrawing) return;
+	e.preventDefault();
 
-	const rect = canvas.getBoundingClientRect();
-	const x = e.clientX - rect.left;
-	const y = e.clientY - rect.top;
+	const x = getX(e);
+	const y = getY(e);
 
 	ctx.lineTo(x, y);
 	ctx.stroke();
@@ -34,8 +66,11 @@ function draw(e) {
 
 // Event listeners for drawing
 canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('touchstart', startDrawing);
 canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('touchmove', draw);
 canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('touchend', stopDrawing);
 canvas.addEventListener('mouseout', stopDrawing);
 
 // Clear canvas
@@ -43,6 +78,7 @@ document.getElementById('clearButton').addEventListener('click', () => {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
 
+// Set up the API URL
 const API_URL = 'http://127.0.0.1:5001';
 
 // Start new game
@@ -61,6 +97,7 @@ document.getElementById('startButton').addEventListener('click', async () => {
 		document.getElementById('topic').textContent = `Draw: ${data.topic}`;
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		document.getElementById('result').textContent = '';
+		document.getElementById('result').className = '';
 	} catch (error) {
 		console.error(`Failed to start new game:`, error);
 		document.getElementById('topic').textContent = `Error: ${error.message}`;
@@ -71,6 +108,7 @@ document.getElementById('startButton').addEventListener('click', async () => {
 document.getElementById('predictButton').addEventListener('click', async () => {
 	const resultDiv = document.getElementById('result');
 	resultDiv.textContent = 'Processing...';
+	resultDiv.className = '';
 
 	try {
 		// Create a temporary canvas to add white background
@@ -104,7 +142,15 @@ document.getElementById('predictButton').addEventListener('click', async () => {
 
 		const data = await response.json();
 		console.log(data);
-		resultDiv.textContent = `Prediction: ${data.description}\nCorrect: ${data.correct}`;
+
+		resultDiv.textContent = `Prediction: ${data.description}`;
+		if (data.correct) {
+			resultDiv.className = 'success';
+			resultDiv.textContent += '\nYou drew it correctly!';
+		} else {
+			resultDiv.className = 'failure';
+			resultDiv.textContent += '\nTry again!';
+		}
 	} catch (error) {
 		console.error(`Attempt failed:`, error);
 		resultDiv.textContent = `Error: ${error.message}`;
