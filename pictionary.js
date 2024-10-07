@@ -10,19 +10,6 @@ ctx.lineWidth = 5;
 ctx.lineCap = 'round';
 ctx.strokeStyle = '#000';
 
-// Adjust for touch devices
-let offsetLeft, offsetTop;
-
-function updateCanvasOffset() {
-	const rect = canvas.getBoundingClientRect();
-	offsetLeft = rect.left;
-	offsetTop = rect.top;
-}
-
-// Update offsets on window resize
-window.addEventListener('resize', updateCanvasOffset);
-updateCanvasOffset();
-
 // Drawing functions
 function startDrawing(e) {
 	e.preventDefault();
@@ -35,28 +22,24 @@ function stopDrawing() {
 	ctx.beginPath();
 }
 
-function getX(e) {
-	if (e.type.includes('touch')) {
-		return e.touches[0].clientX - offsetLeft;
+function getPosition(e) {
+	let x, y;
+	if (e.type.startsWith('touch')) {
+		const rect = canvas.getBoundingClientRect();
+		x = e.touches[0].clientX - rect.left;
+		y = e.touches[0].clientY - rect.top;
 	} else {
-		return e.clientX - offsetLeft;
+		x = e.offsetX;
+		y = e.offsetY;
 	}
-}
-
-function getY(e) {
-	if (e.type.includes('touch')) {
-		return e.touches[0].clientY - offsetTop;
-	} else {
-		return e.clientY - offsetTop;
-	}
+	return { x, y };
 }
 
 function draw(e) {
 	if (!isDrawing) return;
 	e.preventDefault();
 
-	const x = getX(e);
-	const y = getY(e);
+	const { x, y } = getPosition(e);
 
 	ctx.lineTo(x, y);
 	ctx.stroke();
@@ -66,9 +49,9 @@ function draw(e) {
 
 // Event listeners for drawing
 canvas.addEventListener('mousedown', startDrawing);
-canvas.addEventListener('touchstart', startDrawing);
+canvas.addEventListener('touchstart', startDrawing, { passive: false });
 canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('touchmove', draw);
+canvas.addEventListener('touchmove', draw, { passive: false });
 canvas.addEventListener('mouseup', stopDrawing);
 canvas.addEventListener('touchend', stopDrawing);
 canvas.addEventListener('mouseout', stopDrawing);
@@ -79,7 +62,8 @@ document.getElementById('clearButton').addEventListener('click', () => {
 });
 
 // Set up the API URL
-const API_URL = 'http://127.0.0.1:5001';
+const API_URL = 'http://127.0.0.1:5001'; // Update if necessary
+
 
 // Start new game
 document.getElementById('startButton').addEventListener('click', async () => {

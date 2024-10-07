@@ -1,3 +1,4 @@
 # ignore API python file
 api.py
 images/
+__pycache__/
