@@ -43,7 +43,7 @@ document.getElementById('clearButton').addEventListener('click', () => {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
 
-const API_URL = 'http://127.0.0.1:5000';
+const API_URL = 'http://your_server_domain_or_ip:5000'; // Update with your server's address
 
 // Start new game
 document.getElementById('startButton').addEventListener('click', async () => {

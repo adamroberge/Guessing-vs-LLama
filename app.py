@@ -1,9 +1,12 @@
-import random
-from flask_cors import CORS
-from llm_api_calls import *
-from flask import Flask, request, jsonify
-import logging
+# flask_app.py
 
+from flask import Flask, request, jsonify
+from llm_api_calls import *
+from flask_cors import CORS
+import random
+import base64
+from PIL import Image
+from io import BytesIO
 
 topics = [
     {
@@ -43,12 +46,14 @@ topics = [
 current_topic = None
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:8000"}})
+
+# Adjust CORS settings as needed
+CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 def check_correctness(llm_pred):
-    return all([(t in llm_pred) for t in current_topic["targets"]])
+    return all([(t in llm_pred.lower()) for t in current_topic["targets"]])
 
 
 @app.route("/begin_pictionary", methods=["GET"])
@@ -76,13 +81,8 @@ def api_describe_image():
     print(f"Description being returned: {description}")
     print(f"Correct: {correct}")
 
-    logging.basicConfig(level=logging.INFO)
-    logging.info(f"Description being returned: {description}")
-    logging.info(f"Correct: {correct}")
-
     return jsonify({"description": description, "correct": correct})
 
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
-    # app.run(debug=True)
