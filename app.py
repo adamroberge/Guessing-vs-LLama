@@ -2,6 +2,8 @@ import random
 from flask_cors import CORS
 from llm_api_calls import *
 from flask import Flask, request, jsonify
+import logging
+
 
 topics = [
     {
@@ -74,8 +76,13 @@ def api_describe_image():
     print(f"Description being returned: {description}")
     print(f"Correct: {correct}")
 
+    logging.basicConfig(level=logging.INFO)
+    logging.info(f"Description being returned: {description}")
+    logging.info(f"Correct: {correct}")
+
     return jsonify({"description": description, "correct": correct})
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
+    # app.run(debug=True)
