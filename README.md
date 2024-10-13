@@ -1,6 +1,6 @@
 
-# Guessing-vs-LLama: Pictionary with LLaMA
-Welcome to Guessing-vs-LLama, a Pictionary-style web application where you can draw doodles, and a language model (LLaMA) will attempt to guess what you've drawn! This project integrates a Flask backend with a simple frontend and leverages the power of LLaMA models deployed via DeepInfra.
+# Guessing-vs-LLama: Pictionary with Llama
+Welcome to Guessing-vs-LLama, a Pictionary-style web application where you can draw doodles, and a language model (Llama) will attempt to guess what you've drawn! This project integrates a Flask backend with a simple frontend and leverages the power of Llama models deployed via DeepInfra.
 
 ## Table of Contents
 - [Features](#features)
@@ -16,14 +16,14 @@ Welcome to Guessing-vs-LLama, a Pictionary-style web application where you can d
 
 ## Features
 - **Interactive Drawing Canvas:** Draw your doodles directly in the browser.
-- **AI Guessing:** The LLaMA model attempts to guess your drawing.
+- **AI Guessing:** The Llama model attempts to guess your drawing.
 - **Flask Backend:** A simple API to handle image processing and communication with the AI model.
 - **DeepInfra Integration:** Utilizes DeepInfra's OpenAI-compatible API for model deployment.
 
 ## Prerequisites
 - Python 3.7 or higher
 - Node.js (for frontend development, optional)
-- DeepInfra account with a deployed LLaMA model
+- DeepInfra account with a deployed Llama model
 - Web browser (Chrome, Firefox, etc.)
 
 ## Installation
@@ -37,7 +37,7 @@ cd Guessing-vs-LLama
 ### 2. Set Up a Python Virtual Environment (Optional but Recommended)
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows use venv\Scriptsctivate
+source venv/bin/activate  
 ```
 
 ### 3. Install Python Dependencies
