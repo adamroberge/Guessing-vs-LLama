@@ -2,7 +2,7 @@
 Welcome to Guessing-vs-LLama, a Pictionary-style web application where you can draw doodles, and a language model (Llama) will attempt to guess what you've drawn! This project integrates a Flask backend with a simple frontend and leverages the power of Llama models deployed via DeepInfra.
 
 ### Special Shoutout:
-This project was inspired by the amazing tutorial from (Neural Breakdown with AVB)[https://www.youtube.com/@avb_fj]. His detailed breakdown of Meta’s LLama 3.2 Vision model and step-by-step guide on creating multimodal apps with Flask made this project possible. Check out his channel for more awesome AI and LLM content!
+This project was inspired by the amazing tutorial from [Neural Breakdown with AVB](https://www.youtube.com/@avb_fj). His detailed breakdown of Meta’s LLama 3.2 Vision model and step-by-step guide on creating multimodal apps with Flask made this project possible. Check out his channel for more awesome AI and LLM content!
 
 
 ## Table of Contents
